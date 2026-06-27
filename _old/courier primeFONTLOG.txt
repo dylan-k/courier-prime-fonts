@@ -1,0 +1,57 @@
+
+  FONTLOG: Courier Prime
+
+  --------------------------------------------
+  CourierPrime-Bold
+  --------------------------------------------
+
+  This file provides detailed information on the Courier 
+  Prime font software.
+  This information should be distributed along with the 
+  Courier Prime font and any derivative works.
+  
+  Courier Prime Font Information
+  
+  Courier Prime is a monospaced font designed specifically 
+  for screenplays. It was designed by Alan Dague-Greene for 
+  John August and released by Quote-Unquote Apps under the 
+  SIL Open Font License (OFL). 
+  
+  
+  ChangeLog
+  
+  4 Nov 2015 (Christoph Haag)
+- created fontforge sources as base to work on GNU/Linux
+- added FONTLOG to .sfdir
+- Mastered Font from Fontforge SFDIR to 
+  UFO,OTF,TTF,EOT,WOFF,SVG
+  
+  25 Jan 2013 (Alan Dague-Greene) v 1.203
+- Initial release
+  
+  If you make modifications be sure to add your name (N), 
+  email (E), web-address (if you have one) (W) and 
+  description (D). This list is in alphabetical order.
+  
+  N: Christoph Haag
+  E: christoph@lafkon.net
+  W: www.lafkon.net
+  D: Transformer
+  
+  N: Alan Dague-Greene
+  W: www.runningshot.com
+  D: Designer
+
+
+  --------------------------------------------
+  CourierPrime
+  --------------------------------------------
+  see above
+  --------------------------------------------
+  CourierPrime-BoldItalic
+  --------------------------------------------
+  see above
+  --------------------------------------------
+  CourierPrime-Italic
+  --------------------------------------------
+  see above

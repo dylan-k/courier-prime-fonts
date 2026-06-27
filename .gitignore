@@ -1,0 +1,7 @@
+# Project-specific only.
+# OS sidecars (.DS_Store, ._*) and OneDrive per-machine artifacts (*-MACHINE.*)
+# are handled in the global excludes (~/.gitignore_global).
+
+# build scratch / staging
+_rebuild-ttf/
+build/_work/

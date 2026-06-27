@@ -1,0 +1,11 @@
+# Treat font binaries as binary (no eol/text munging, binary diffs)
+*.ttf binary
+*.otf binary
+*.ttc binary
+*.woff binary
+*.woff2 binary
+*.glyphs binary
+
+# Normalize text to LF
+*.txt text eol=lf
+*.md  text eol=lf
