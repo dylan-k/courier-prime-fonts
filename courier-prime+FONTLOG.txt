@@ -20,6 +20,14 @@
   
   ChangeLog
   
+  27 Jun 2026 (Dylan Kinnett)
+- Assembled a personal master set; all families standardized to hinted TTF.
+- Added Courier Prime Code Nerd Font Mono (derivative): Nerd Fonts 3.4.0
+  icons, single-width "mono", 4 weights. Restored the vertical line metrics
+  to Courier Prime's native values (the Nerd patch had inflated them), set
+  gasp for clean GDI antialiasing, and named the family
+  "Courier Prime Code Nerd Font Mono".
+
   4 Nov 2015 (Christoph Haag)
 - created fontforge sources as base to work on GNU/Linux
 - added FONTLOG to .sfdir
@@ -41,6 +49,10 @@
   N: Alan Dague-Greene
   W: www.runningshot.com
   D: Designer
+
+  N: Dylan Kinnett
+  W: github.com/dylan-k
+  D: Personal master set; Courier Prime Code Nerd Font Mono (Nerd Fonts) build
 
 
   --------------------------------------------
