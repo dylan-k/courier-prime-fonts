@@ -3,32 +3,32 @@ COURIER PRIME FONTS — master set
 
 This folder holds the master copies of the Courier Prime font families.
 
-Standard format: OpenType (.otf). Filenames: Title Case with spaces.
-
-EXCEPTION: the Code Nerd Font Mono family ships as hinted TrueType (.ttf) —
-TTF + bytecode/gasp hinting renders cleanly under Emacs-on-Windows (GDI),
-where unhinted CFF/OTF looks pixellated. 
+Standard format: hinted TrueType (.ttf). Filenames: Title Case with spaces.
+TTF is what every upstream source ships natively, and TTF + bytecode/gasp
+hinting renders cleanly everywhere — including Emacs-on-Windows (GDI), where
+unhinted CFF/OTF looks pixellated.
 
 License: SIL Open Font License 1.1 (OFL) for all families.
 
 
-CONTENTS (14 faces — 10 OTF + 4 TTF)
+CONTENTS (14 faces — all hinted TTF)
 ---------------------------------------------
-Courier Prime (screenplay) — v1.203/1.202, native OTF:
-  Courier Prime Regular.otf
-  Courier Prime Bold.otf
-  Courier Prime Italic.otf
-  Courier Prime Bold Italic.otf
+Courier Prime (screenplay) — fontain.org TTF re-cut:
+  Courier Prime Regular.ttf
+  Courier Prime Bold.ttf
+  Courier Prime Italic.ttf
+  Courier Prime Bold Italic.ttf
 
-Courier Prime community weights — v1.202, by M. Babek Aliassa:
-  Courier Prime Medium.otf
-  Courier Prime SemiBold.otf
+Courier Prime community weights — by M. Babek Aliassa
+  (family "Courier Prime", weights Medium / SemiBold):
+  Courier Prime Medium.ttf
+  Courier Prime SemiBold.ttf
 
 Courier Prime Sans — v3.020:
-  Courier Prime Sans Regular.otf
-  Courier Prime Sans Italic.otf
-  Courier Prime Sans Bold.otf
-  Courier Prime Sans Bold Italic.otf
+  Courier Prime Sans Regular.ttf
+  Courier Prime Sans Italic.ttf
+  Courier Prime Sans Bold.ttf
+  Courier Prime Sans Bold Italic.ttf
 
 Courier Prime Code Nerd Font Mono — base v3.0318 + Nerd Fonts 3.4.0 icons
   (hinted TTF; single-width "mono"; ~11k glyphs incl. all NF icon sets):
@@ -44,6 +44,22 @@ Courier Prime Code Nerd Font Mono — base v3.0318 + Nerd Fonts 3.4.0 icons
 
 CHANGELOG
 ---------
+2026-06-27 (later)
+
+  Reversed the "all OTF" standard -> the whole collection is now hinted TTF.
+    - Why: TTF is what every upstream ships natively, and hinted TTF renders
+      better and more consistently than CFF/OTF (especially Emacs-on-Windows
+      via GDI). The earlier OTF standardization discarded native hinting and
+      chased a format no source provides for Medium/SemiBold/Sans.
+    - Screenplay R/B/I/BI: fontain.org TTF re-cut (export/ttf) — same design
+      as the OTF re-cut it replaces, now hinted.
+    - Medium/SemiBold: canonical quoteunquoteapps TTF masters (the OTFs were
+      derived from these; lossless revert that restores hinting).
+    - Sans R/I/B/BI: quoteunquoteapps/CourierPrimeSans TTF.
+    - Code Nerd Font Mono: already TTF (see entry below).
+    - Removed _old/ (superseded OTFs, prior builds, retired bookmarks) —
+      recoverable from git history. One good copy of the set, all TTF.
+
 2026-06-27
 
   Rebuilt the Code Nerd Font Mono family as hinted TTF + renamed it.
@@ -108,7 +124,7 @@ CHANGELOG
 SOURCES
 -------
   Courier Prime / Sans / Code (upstream):  github.com/quoteunquoteapps
-  Screenplay OTF re-cut:                   fontain.org/courier-prime
+  Screenplay TTF re-cut:                   fontain.org/courier-prime
   Medium / SemiBold:                       quoteunquoteapps.com/courierprime
   Code Nerd Font base fork:                github.com/3T1C/CourierPrimeCode
   Nerd Fonts patcher (3.4.0):              github.com/ryanoasis/nerd-fonts
@@ -127,11 +143,14 @@ LINKS (merged from the old .url / .webloc bookmark files)
     https://fontain.org/courier-prime/
 
 
-RE-DOWNLOAD (if a master is ever lost)
---------------------------------------
+RE-DOWNLOAD (if a master is ever lost) — all native TTF
+-------------------------------------------------------
+  Screenplay (R/B/I/BI):
+    curl -fsSL -o cp.ttf.zip \
+      https://fontain.org/courier-prime/export/ttf/courier-prime.ttf.zip
   Medium / SemiBold:
     curl -fsSL -o cp-medium-semibold.zip \
       https://quoteunquoteapps.com/courierprime/downloads/courier-prime-medium-semi-bold.zip
-  Sans (TTF master, then convert):
-    curl -fsSL -o cp-sans.zip \
-      https://quoteunquoteapps.com/courierprime/downloads/courier-prime-sans.zip
+  Sans (R/I/B/BI):     github.com/quoteunquoteapps/CourierPrimeSans  (ttf/)
+  Code Nerd Font Mono: rebuilt from 3T1C/CourierPrimeCode .glyphs +
+                       Nerd Fonts patcher (see 2026-06-27 changelog)
