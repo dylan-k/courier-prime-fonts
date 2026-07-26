@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Rebuild "Courier Prime Code Nerd Font Mono" (Regular, Italic, Bold, Medium).
+# Rebuild "Courier Prime Code" (Regular, Italic, Bold, Medium) with Nerd icons.
 #
 # Re-run this when the Nerd Fonts patcher updates (new icon sets / codepoints).
 #
@@ -38,13 +38,18 @@ fetch "$FORK_RAW/glyphs/Courier%20Prime%20Code%20Italic.glyphs" "src/Courier Pri
 fetch "$FORK_RAW/ttf/nerd-fonts/CourierPrimeCodeNerdFont-Bold.ttf"   "src/fork-Bold.ttf"
 fetch "$FORK_RAW/ttf/nerd-fonts/CourierPrimeCodeNerdFont-Medium.ttf" "src/fork-Medium.ttf"
 
-# output filename per weight (Medium/Regular get bare/­suffixed names)
+# output filename per weight (Regular is bare; others are suffixed)
 outfile() {
   case "$1" in
-    Regular) echo "$OUT/Courier Prime Code Nerd Font Mono.ttf" ;;
-    *)       echo "$OUT/Courier Prime Code Nerd Font Mono $1.ttf" ;;
+    Regular) echo "$OUT/Courier Prime Code.ttf" ;;
+    *)       echo "$OUT/Courier Prime Code $1.ttf" ;;
   esac
 }
+
+# harmonize.py applies the collection metadata standard: canonical family name
+# "Courier Prime Code", unified vertical metrics, monospace flags, gasp, and a
+# usWin box sized from the patched glyph bounds so Nerd icons are never clipped.
+harmonize() { python "$HERE/harmonize.py" "$1" "$(outfile "$2")" "Courier Prime Code" "$2"; }
 
 build_from_source() {  # <glyphs-file> <weight>
   local g="$1" w="$2"
@@ -54,14 +59,14 @@ build_from_source() {  # <glyphs-file> <weight>
   "$TTFAUTOHINT" "$base" "stage/base-$w.ttf"
   rm -rf "stage/patched-$w"; mkdir -p "stage/patched-$w"
   fontforge -script "$PATCHER" --complete --mono --quiet --outputdir "stage/patched-$w" "stage/base-$w.ttf"
-  python "$HERE/postprocess.py" "$(ls "stage/patched-$w"/*.ttf | head -1)" "$(outfile "$w")" "$w"
+  harmonize "$(ls "stage/patched-$w"/*.ttf | head -1)" "$w"
 }
 
 rehint_fork() {        # <weight>
   local w="$1"
   echo ">> [$w] re-hint 3T1C pre-patched TTF (no source available)"
   "$TTFAUTOHINT" "src/fork-$w.ttf" "stage/bm-$w.ttf"
-  python "$HERE/postprocess.py" "stage/bm-$w.ttf" "$(outfile "$w")" "$w"
+  harmonize "stage/bm-$w.ttf" "$w"
 }
 
 build_from_source "src/Courier Prime Code.glyphs"        Regular

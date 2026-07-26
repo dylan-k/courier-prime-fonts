@@ -15,60 +15,89 @@ Credits:
   - Courier Prime (screenplay) — Alan Dague-Greene, for John August /
     Quote-Unquote Apps.
   - Medium / SemiBold weights — M. Babek Aliassa.
-  - Code Nerd Font Mono — built in this repo (see BUILD).
+  - Code (Nerd icons) — built in this repo (see BUILD).
 
 Font-level change history: courier-prime+FONTLOG.txt.
 
 
-CONTENTS (14 faces — all hinted TTF)
----------------------------------------------
-Courier Prime (screenplay) — fontain.org TTF re-cut:
+THREE FAMILIES (14 faces — all hinted TTF)
+------------------------------------------
+The collection is three separate font families that share the "Courier Prime"
+name prefix. They are distinct designs, not weights of one another, so each is
+its own family (the same pattern as Source Sans / Serif / Code, or IBM Plex
+Sans / Serif / Mono). Within a family, weights beyond Regular/Bold/Italic/Bold
+Italic are held together by the typographic family name; see METADATA STANDARD.
+
+Courier Prime — screenplay slab monospace (quoteunquoteapps v3.018):
   Courier Prime Regular.ttf
   Courier Prime Bold.ttf
   Courier Prime Italic.ttf
   Courier Prime Bold Italic.ttf
-
-Courier Prime community weights — by M. Babek Aliassa
-  (family "Courier Prime", weights Medium / SemiBold):
-  Courier Prime Medium.ttf
-  Courier Prime SemiBold.ttf
+  Courier Prime Medium.ttf       (community weight, M. Babek Aliassa)
+  Courier Prime SemiBold.ttf     (community weight, M. Babek Aliassa)
+  -> family "Courier Prime": Regular / Medium / SemiBold / Bold + italics
 
 Courier Prime Sans — v3.020:
   Courier Prime Sans Regular.ttf
   Courier Prime Sans Italic.ttf
   Courier Prime Sans Bold.ttf
   Courier Prime Sans Bold Italic.ttf
+  -> family "Courier Prime Sans" (four-style RIBBI)
 
-Courier Prime Code Nerd Font Mono — base v3.0318 + Nerd Fonts 3.4.0 icons
-  (hinted TTF; single-width "mono"; ~11k glyphs incl. all NF icon sets):
-  Courier Prime Code Nerd Font Mono.ttf         (Regular)
-  Courier Prime Code Nerd Font Mono Medium.ttf
-  Courier Prime Code Nerd Font Mono Bold.ttf
-  Courier Prime Code Nerd Font Mono Italic.ttf
-  -> Internal font family name is "Courier Prime Code Nerd Font Mono"
-     (Medium is its own family "...Mono Medium"). PostScript names stay
-     space-free ("CourierPrimeCodeNerdFontMono-*").
-     Set terminals/editors to the family name (not the filename).
+Courier Prime Code — base v3.0318 + Nerd Fonts 3.4.0 icons
+  (single-width "mono"; ~11k glyphs incl. all NF icon sets):
+  Courier Prime Code.ttf         (Regular)
+  Courier Prime Code Medium.ttf
+  Courier Prime Code Bold.ttf
+  Courier Prime Code Italic.ttf
+  -> family "Courier Prime Code": Regular / Medium / Bold / Italic.
+     The short family name (no "Nerd Font Mono" suffix) fits terminals and
+     editors that limit the family field. Point them at the family name, not
+     the filename.
 
 
-BUILD / UPDATE (Code Nerd Font Mono only)
------------------------------------------
-Screenplay, Sans, Medium and SemiBold are upstream TTFs used as-is (see
-RE-DOWNLOAD). Only the Code Nerd Font Mono family is built here. Rebuild it
-when the Nerd Fonts patcher gains new icons / codepoints:
+METADATA STANDARD (build/harmonize.py)
+--------------------------------------
+Every face is passed through build/harmonize.py, the single source of truth
+for the collection's naming and metrics:
+
+  - Family grouping: each family's faces share one typographic family name
+    (nameID 16). A weight beyond RIBBI (Medium, SemiBold) also gets its own
+    legacy family (nameID 1) so four-slot apps still see a coherent
+    Regular/Bold/Italic set. This is why the OS shows exactly three families,
+    not five, and why every weight lands under the right one.
+  - Monospace: post.isFixedPitch = 1 and PANOSE proportion = Monospaced.
+  - One line rhythm across the whole collection: typo and hhea ascender /
+    descender = 1600 / -700, lineGap 0 (1.123 em), with USE_TYPO_METRICS on
+    so it governs on every platform. This clears the tallest accents (Latin
+    text ink runs ~1.13-1.17 em) so lines never overlap, and stays as tight
+    as the glyphs allow. usWinAscent/Descent track each face's real glyph
+    bounds (floored to 1900/800) so Nerd icons are never clipped; the clip box
+    does not drive line height because USE_TYPO_METRICS is on.
+  - gasp {65535: 15}: grayscale + gridfit at all sizes for clean GDI output.
+
+Re-apply the standard to any face (e.g. a freshly downloaded vendor TTF):
+    python build/harmonize.py <in.ttf> <out.ttf> "<Family>" "<Subfamily>" [--ribbi]
+  Use --ribbi for a pure four-style family (Sans) to omit the typographic
+  (nameID 16/17) records.
+
+
+BUILD / UPDATE (Code only)
+--------------------------
+Screenplay, Sans, Medium and SemiBold are upstream TTFs, harmonized as-is (see
+RE-DOWNLOAD). Only Courier Prime Code is built here. Rebuild it when the Nerd
+Fonts patcher gains new icons / codepoints:
 
     bash build/build-code-nerd.sh
 
-Pipeline (build/build-code-nerd.sh + build/postprocess.py):
+Pipeline (build/build-code-nerd.sh + build/harmonize.py):
   - Regular + Italic: 3T1C .glyphs -> fontmake -> ttfautohint -> Nerd Fonts
     patch (--complete --mono). Fully reproducible from source.
   - Bold + Medium: NO published source exists — 3T1C never released masters
     (only Regular/Italic .glyphs are anywhere in the fork's git history).
     They are re-hinted from 3T1C's pre-patched TTFs, so they only gain new
     patcher icons when 3T1C re-patches upstream.
-  - postprocess.py restores vertical metrics (typo/hhea 1421/-643; usWin
-    1797/839 kept tall so icons aren't clipped), sets gasp {65535:15}
-    (smooth+gridfit at all sizes), and applies the canonical family name.
+  - harmonize.py then applies the METADATA STANDARD above.
 
 Tools (install if missing — don't work around):
     pip install fontmake glyphsLib fonttools
@@ -79,32 +108,30 @@ Tools (install if missing — don't work around):
 SOURCES
 -------
   Courier Prime / Sans / Code (upstream):  github.com/quoteunquoteapps
-  Screenplay TTF re-cut:                   fontain.org/courier-prime
   Medium / SemiBold:                       quoteunquoteapps.com/courierprime
   Code Nerd Font base fork:                github.com/3T1C/CourierPrimeCode
   Nerd Fonts patcher:                      github.com/ryanoasis/nerd-fonts
 
 
-LINKS (merged from the old .url / .webloc bookmark files)
----------------------------------------------------------
+RE-DOWNLOAD (if a master is ever lost) — native TTF, then harmonize
+-------------------------------------------------------------------
+  Screenplay (R/B/I/BI), Courier Prime v3.018:
+    github.com/quoteunquoteapps/CourierPrime   (fonts/ttf/)
+  Medium / SemiBold:
+    curl -fsSL -o cp-medium-semibold.zip \
+      https://quoteunquoteapps.com/courierprime/downloads/courier-prime-medium-semi-bold.zip
+  Sans (R/I/B/BI):     github.com/quoteunquoteapps/CourierPrimeSans   (ttf/)
+  Code:                bash build/build-code-nerd.sh   (see BUILD)
+  Then run each downloaded TTF through build/harmonize.py (see METADATA
+  STANDARD) so its names and metrics match the collection.
+
+
+LINKS
+-----
   Courier Prime — home ("It's Courier, just better"):
     https://quoteunquoteapps.com/courierprime/
   Courier Prime — repo:        https://github.com/quoteunquoteapps/CourierPrime
   Courier Prime Code — repo:   https://github.com/quoteunquoteapps/CourierPrimeCode
   Courier Prime Sans — repo:   https://github.com/quoteunquoteapps/CourierPrimeSans
-  Courier Prime Code — fork (Mono Nerd icons, Bold/Medium, .glyphs source):
+  Code fork (Mono Nerd icons, Bold/Medium, .glyphs source):
     https://github.com/3T1C/CourierPrimeCode
-  Screenplay re-cut (TTF / OTF / UFO downloads):
-    https://fontain.org/courier-prime/
-
-
-RE-DOWNLOAD (if a master is ever lost) — all native TTF
--------------------------------------------------------
-  Screenplay (R/B/I/BI):
-    curl -fsSL -o cp.ttf.zip \
-      https://fontain.org/courier-prime/export/ttf/courier-prime.ttf.zip
-  Medium / SemiBold:
-    curl -fsSL -o cp-medium-semibold.zip \
-      https://quoteunquoteapps.com/courierprime/downloads/courier-prime-medium-semi-bold.zip
-  Sans (R/I/B/BI):     github.com/quoteunquoteapps/CourierPrimeSans  (ttf/)
-  Code Nerd Font Mono: bash build/build-code-nerd.sh  (see BUILD)

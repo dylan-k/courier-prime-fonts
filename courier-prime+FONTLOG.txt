@@ -19,7 +19,22 @@
   
   
   ChangeLog
-  
+
+  26 Jul 2026 (Dylan Kinnett)
+- Reorganized into three families: "Courier Prime", "Courier Prime Sans",
+  "Courier Prime Code". Each holds all its weights under one typographic
+  family name; the Code family no longer splits Medium into a second family.
+- Renamed the Code family from "Courier Prime Code Nerd Font Mono" to the
+  shorter "Courier Prime Code" (fits length-limited terminal/editor fields).
+- Replaced the screenplay Regular/Bold/Italic/Bold Italic: the fontain.org
+  re-cut was an old v1.203 with fewer glyphs, no OpenType features, and broken
+  monospace/bold flags. Now quoteunquoteapps v3.018 (correct metadata, wider
+  coverage, stronger hinting).
+- Standardized every face via build/harmonize.py: unified line metrics
+  (typo/hhea 1600/-700, USE_TYPO_METRICS on, 1.123 em), post.isFixedPitch and
+  PANOSE set to monospaced, usWin sized to the real glyph bounds so Nerd icons
+  are not clipped, gasp {65535:15}. Replaces the old build/postprocess.py.
+
   27 Jun 2026 (Dylan Kinnett)
 - Assembled a personal master set; all families standardized to hinted TTF.
 - Added Courier Prime Code Nerd Font Mono (derivative): Nerd Fonts 3.4.0
@@ -52,7 +67,7 @@
 
   N: Dylan Kinnett
   W: github.com/dylan-k
-  D: Personal master set; Courier Prime Code Nerd Font Mono (Nerd Fonts) build
+  D: Personal master set; Courier Prime Code (Nerd Fonts) build; metadata standard
 
 
   --------------------------------------------
