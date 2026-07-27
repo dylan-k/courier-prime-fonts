@@ -30,10 +30,13 @@
   re-cut was an old v1.203 with fewer glyphs, no OpenType features, and broken
   monospace/bold flags. Now quoteunquoteapps v3.018 (correct metadata, wider
   coverage, stronger hinting).
-- Standardized every face via build/harmonize.py: unified line metrics
-  (typo/hhea 1600/-700, USE_TYPO_METRICS on, 1.123 em), post.isFixedPitch and
-  PANOSE set to monospaced, usWin sized to the real glyph bounds so Nerd icons
-  are not clipped, gasp {65535:15}. Replaces the old build/postprocess.py.
+- Standardized every face via build/harmonize.py to Courier Prime v3.018's
+  own vertical metrics, identical on all 14 (typo/hhea 1600/-700, 1.123 em,
+  USE_TYPO_METRICS on, usWin 1900/800). Uniform typo AND win keeps line height
+  consistent in every renderer, so the faces mix like one designed family; a
+  few oversized Nerd icons + Vietnamese stacked-tone caps in Code Bold/Medium
+  fall outside the box and clip. Also sets post.isFixedPitch + PANOSE
+  monospaced and gasp {65535:15}. Replaces the old build/postprocess.py.
 
   27 Jun 2026 (Dylan Kinnett)
 - Assembled a personal master set; all families standardized to hinted TTF.

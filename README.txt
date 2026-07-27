@@ -67,13 +67,20 @@ for the collection's naming and metrics:
     Regular/Bold/Italic set. This is why the OS shows exactly three families,
     not five, and why every weight lands under the right one.
   - Monospace: post.isFixedPitch = 1 and PANOSE proportion = Monospaced.
-  - One line rhythm across the whole collection: typo and hhea ascender /
-    descender = 1600 / -700, lineGap 0 (1.123 em), with USE_TYPO_METRICS on
-    so it governs on every platform. This clears the tallest accents (Latin
-    text ink runs ~1.13-1.17 em) so lines never overlap, and stays as tight
-    as the glyphs allow. usWinAscent/Descent track each face's real glyph
-    bounds (floored to 1900/800) so Nerd icons are never clipped; the clip box
-    does not drive line height because USE_TYPO_METRICS is on.
+  - One line rhythm across the whole collection: every face carries Courier
+    Prime v3.018's own vertical metrics, identical on all 14 — typo and hhea
+    ascender/descender = 1600 / -700, lineGap 0 (1.123 em), USE_TYPO_METRICS
+    on, and usWinAscent/Descent = 1900 / 800. Uniform typo AND uniform win
+    means line height is consistent in every renderer, whichever metric it
+    reads: typo-aware apps (browsers, macOS, DirectWrite) get 1.123 em;
+    legacy/GDI apps that ignore USE_TYPO_METRICS — including Emacs-on-Windows,
+    which takes line height from usWin — get one shared box. So faces mix like
+    a single designed family (bold within a paragraph, a code block in prose)
+    with no line-height jump. The trade: a few oversized Nerd icons in Code
+    Bold/Medium (~0.14%, a 3T1C build quirk in the two weights with no
+    rebuildable source), plus the Vietnamese stacked-tone capitals in those
+    same weights, reach past the 1900/800 box and are clipped; both already
+    break the monospace cell. Normal accents and all other text fit.
   - gasp {65535: 15}: grayscale + gridfit at all sizes for clean GDI output.
 
 Re-apply the standard to any face (e.g. a freshly downloaded vendor TTF):

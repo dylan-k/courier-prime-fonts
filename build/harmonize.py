@@ -47,9 +47,14 @@ import sys
 from fontTools.ttLib import TTFont, newTable
 
 # --- collection-wide constants ---------------------------------------------
+# Courier Prime v3.018's own vertical metrics, applied uniformly to every face.
+# Every family derives from that 2048-UPM design with the same baseline, so one
+# metric set is both consistent and faithful to the original. Uniform typo AND
+# uniform win means line height is identical in every renderer, whichever metric
+# it reads: typo-aware apps get 1.123 em, legacy/GDI apps (incl. Emacs-on-
+# Windows, which ignores USE_TYPO_METRICS and reads usWin) get one shared box.
 TYPO_ASC, TYPO_DESC, TYPO_GAP = 1600, -700, 0   # 1.123 em unified line rhythm
-WIN_ASC_FLOOR, WIN_DESC_FLOOR = 1900, 800       # text clip box; icons raise it
-WIN_MARGIN = 16                                  # guard against AA edge clipping
+WIN_ASC, WIN_DESC = 1900, 800                    # shared clip box (upstream's)
 RIBBI = {"Regular", "Bold", "Italic", "Bold Italic"}
 
 # fsSelection / macStyle bit positions
@@ -122,11 +127,13 @@ def main(inp, out, family, sub, ribbi=False):
     if hasattr(os2, "panose"):
         os2.panose.bProportion = 9   # PANOSE Latin-text proportion: Monospaced
 
-    # Unified vertical metrics.
+    # Unified vertical metrics — identical on every face (see constants). A few
+    # oversized Nerd icons in Code Bold/Medium (~0.14%, a 3T1C build quirk in
+    # the weights that have no rebuildable source) reach past this box and are
+    # clipped; they break the monospace cell regardless.
     os2.sTypoAscender, os2.sTypoDescender, os2.sTypoLineGap = TYPO_ASC, TYPO_DESC, TYPO_GAP
     hhea.ascent, hhea.descent, hhea.lineGap = TYPO_ASC, TYPO_DESC, TYPO_GAP
-    os2.usWinAscent = max(WIN_ASC_FLOOR, head.yMax + WIN_MARGIN)
-    os2.usWinDescent = max(WIN_DESC_FLOOR, -head.yMin + WIN_MARGIN)
+    os2.usWinAscent, os2.usWinDescent = WIN_ASC, WIN_DESC
     head.lowestRecPPEM = 8
 
     # Smooth GDI rendering at all sizes.

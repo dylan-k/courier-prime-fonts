@@ -1,0 +1,21 @@
+Courier 10 Pitch BT
+June 5, 2020
+Package maintained by Daniel Benjamin Miller <dbmiller@dbmiller.org>
+
+This is Courier 10 Pitch BT, made available by Bitstream, packaged in OpenType
+format as well as Type 1 for use with LaTeX.
+
+To set Courier 10 Pitch BT as the typewriter font (\ttdefault), use:
+
+\usepackage{courierten}
+
+in your document's preamble.
+
+The font is included with encodings T1, TS1, OT1 and LY1.
+
+You may use the option "scale" or "scaled" with a value or "MatchLowercase"
+(which is the default) to set the font scale.
+
+For the details of the font's license, see COPYING.
+No copyright is claimed on the support files, which were automatically
+generated using autoinst.
