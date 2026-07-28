@@ -1,0 +1,9 @@
+[submodule "src/CourierPrime"]
+	path = src/CourierPrime
+	url = https://github.com/quoteunquoteapps/CourierPrime.git
+[submodule "src/CourierPrimeCode"]
+	path = src/CourierPrimeCode
+	url = https://github.com/quoteunquoteapps/CourierPrimeCode.git
+[submodule "src/CourierPrimeSans"]
+	path = src/CourierPrimeSans
+	url = https://github.com/quoteunquoteapps/CourierPrimeSans.git
