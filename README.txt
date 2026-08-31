@@ -97,6 +97,11 @@ Fonts patcher gains new icons / codepoints:
 
     bash build/build-code-nerd.sh
 
+Why the 3T1C fork: every upstream fork was compared by commits-ahead and by
+inspecting the actual font files, not by star count. 3T1C carries the v3.0318
+outlines plus genuine Bold and Medium weights and Vietnamese glyphs that the
+original never had.
+
 Pipeline (build/build-code-nerd.sh + build/harmonize.py):
   - Regular + Italic: 3T1C .glyphs -> fontmake -> ttfautohint -> Nerd Fonts
     patch (--complete --mono). Fully reproducible from source.
